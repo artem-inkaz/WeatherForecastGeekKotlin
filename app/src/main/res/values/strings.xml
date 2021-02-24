@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">WeatherForecastGeekKotlin</string>
+    <string name="change_city_dialog">Выбрать город</string>
+    <string name="go">Go</string>
+    <string name="place_not_found">Ничего не найдено</string>
 </resources>
