@@ -1,8 +1,10 @@
 package com.example.weatherforecastgeekkotlin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.weatherforecastgeekkotlin.models.DataModel
@@ -11,9 +13,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.weatherforecastgeekkotlin.api.Retrofitmpl
-import com.example.weatherforecastgeekkotlin.api2.CommonInterceptor
 import com.example.weatherforecastgeekkotlin.apigeokoder.RetrofitmplGeokoder
 import com.example.weatherforecastgeekkotlin.models.DataModelGeo
+import com.example.weatherforecastgeekkotlin.openweathermap.OpenWeatherActivity
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.*
 
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var feeltemperaturefield: TextView
     private lateinit var conditiontextview: TextView
 
+    private lateinit var button_openweather: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,12 +49,22 @@ class MainActivity : AppCompatActivity() {
         feeltemperaturefield = findViewById(R.id.feel_temperature_field)
         conditiontextview = findViewById(R.id.condition_text_view)
         // отправка запроса на сервер
-        sendServerRequest()
-        sendServerRequestGeokoder()
+//        sendServerRequest()
+//        sendServerRequestGeokoder()
+
+        button_openweather = findViewById(R.id.button_openweather)
+        button_openweather.setOnClickListener {
+            // Variant 1
+            val i = Intent(this,OpenWeatherActivity::class.java).apply { }
+            startActivity(i)
+            // Variant 2
+//              val intent2 = newIntent(this@MainActivity, false)
+//              startActivity(intent2)
+        }
     }
     // отправка запроса погоды по координатам на сервер
     private fun sendServerRequest() {
-//        scope.launch {
+        scope.launch {
             retrofitmpl.getWeatherApi()
                 .getWeather(
 //                    token = "bf3d16a4-e51f-4c90-b9bd-23bb1f52ffc7",
@@ -76,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                         renderData(null, t)
                     }
                 })
-//        }
+      }
     }
     // погода по координатам
     private fun renderData(dataModel: DataModel?, error: Throwable?) {

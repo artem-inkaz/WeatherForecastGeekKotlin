@@ -16,5 +16,5 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Snow (
 
-		@SerializedName("1h") val 1h : Double
+		@SerializedName("1h") val h : Double
 )

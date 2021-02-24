@@ -16,10 +16,10 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Main (
 
-		@SerializedName("temp") val temp : Int,
-		@SerializedName("feels_like") val feels_like : Double,
-		@SerializedName("temp_min") val temp_min : Int,
-		@SerializedName("temp_max") val temp_max : Int,
-		@SerializedName("pressure") val pressure : Int,
-		@SerializedName("humidity") val humidity : Int
+		val temp : Double,
+		val feels_like : Double,
+		val temp_min : Double,
+		val temp_max : Double,
+		val pressure : Int,
+		val humidity : Int
 )
