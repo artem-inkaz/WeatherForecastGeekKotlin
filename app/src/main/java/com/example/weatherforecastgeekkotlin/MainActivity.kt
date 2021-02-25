@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         feeltemperaturefield = findViewById(R.id.feel_temperature_field)
         conditiontextview = findViewById(R.id.condition_text_view)
         // отправка запроса на сервер
-//        sendServerRequest()
+        sendServerRequest()
 //        sendServerRequestGeokoder()
 
         button_openweather = findViewById(R.id.button_openweather)
@@ -159,47 +159,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     // отправка запроса название места по координатам на сервер
-    private fun sendServerRequestGeokoder() {
-//        scope.launch {
-        retrofitmplGeokoder.getGeokoderApi()
-            .getGeokoder(
-                "bf3d16a4-e51f-4c90-b9bd-23bb1f52ffc7",
-                 "55.833333,37.616667"
-            )
-            // возвращаем модель данных
-            .enqueue(object :
-                Callback<DataModelGeo> {
-                override fun onResponse(
-                    call: Call<DataModelGeo>,
-                    response: Response<DataModelGeo>
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        renderDataGeokoder(response.body()!!, Throwable(" ${currenttemperturefield.text}"))
-                    } else {
-                        renderData(null, Throwable(" Ответ от сервера пустой"))
-                    }
-                }
-
-                override fun onFailure(call: Call<DataModelGeo>, t: Throwable) {
-                    renderData(null, t)
-                }
-            })
-//        }
-    }
+//    private fun sendServerRequestGeokoder() {
+////        scope.launch {
+//        retrofitmplGeokoder.getGeokoderApi()
+//            .getGeokoder(
+//                "bf3d16a4-e51f-4c90-b9bd-23bb1f52ffc7",
+//                 "55.833333,37.616667"
+//            )
+//            // возвращаем модель данных
+//            .enqueue(object :
+//                Callback<DataModelGeo> {
+//                override fun onResponse(
+//                    call: Call<DataModelGeo>,
+//                    response: Response<DataModelGeo>
+//                ) {
+//                    if (response.isSuccessful && response.body() != null) {
+//                        renderDataGeokoder(response.body()!!, Throwable(" ${currenttemperturefield.text}"))
+//                    } else {
+//                        renderData(null, Throwable(" Ответ от сервера пустой"))
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<DataModelGeo>, t: Throwable) {
+//                    renderData(null, t)
+//                }
+//            })
+////        }
+//    }
     // погода по координатам
-    private fun renderDataGeokoder(dataModelGeo: DataModelGeo?, error: Throwable?) {
-        if (dataModelGeo?.geocode == null || error == null){
-            Toast.makeText(this,error?.message, Toast.LENGTH_LONG).show()
-        } else {
-            val geocode : String? = dataModelGeo?.geocode
-            if (geocode == null) {
-
-            } else {
-                findViewById<TextView>(R.id.title_text).text = dataModelGeo?.geocode
-//                currenttemperturefield.text = temperature.toString()
-            }
-        }
-    }
+//    private fun renderDataGeokoder(dataModelGeo: DataModelGeo?, error: Throwable?) {
+//        if (dataModelGeo?.geocode == null || error == null){
+//            Toast.makeText(this,error?.message, Toast.LENGTH_LONG).show()
+//        } else {
+//            val geocode : String? = dataModelGeo?.geocode
+//            if (geocode == null) {
+//
+//            } else {
+//                findViewById<TextView>(R.id.title_text).text = dataModelGeo?.geocode
+////                currenttemperturefield.text = temperature.toString()
+//            }
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
