@@ -1,5 +1,7 @@
-package com.example.weatherforecastgeekkotlin.api
+package com.example.weatherforecastgeekkotlin.openweathermap.api
 
+import com.example.weatherforecastgeekkotlin.api.WeatherAPI
+import com.example.weatherforecastgeekkotlin.api2.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -7,14 +9,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+private const val OPEN_WEATHER_MAP_API1 =
+    "http://api.openweathermap.org/data/2.5/weather?q=%s&apikey=%s&units=metric"
 
-class Retrofitmpl {
-        fun getWeatherApi(
-//            interceptor: CommonInterceptor,
-//            loggingInterceptor: LoggingInterceptor
-        ): WeatherAPI {
+class RetrofitmplOpenWeather {
+        fun getOpenWeatherApi(
+        ): OpenWeatherAPI {
             val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl("https://api.weather.yandex.ru/")
+                .baseUrl("http://api.openweathermap.org/")
 //            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create(
@@ -23,7 +25,7 @@ class Retrofitmpl {
                 )
                 .client(createOkHttpClient(CommonInterceptor()))
                 .build()
-            return retrofit.create(WeatherAPI::class.java)
+            return retrofit.create(OpenWeatherAPI::class.java)
         }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
@@ -35,11 +37,7 @@ class Retrofitmpl {
 
     inner class CommonInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-            val request = chain.request()
-                .newBuilder()
-                .addHeader("X-Yandex-API-Key",  "bf3d16a4-e51f-4c90-b9bd-23bb1f52ffc7")
-                .build()
-            return chain.proceed(request)
+            return chain.proceed(chain.request())
         }
     }
 }
